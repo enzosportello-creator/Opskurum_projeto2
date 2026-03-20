@@ -1,1 +1,75 @@
-hello world
+#IMPORTE DOS MODULOS E INICIALIZAÇÃO DE PROGRAMAS
+import pygame
+import time
+pygame.init()
+pygame.font.init()
+pygame.mixer.init()
+
+
+#VARIÁVEIS PARA A ESTRUTURAÇÃO DA JANELA E DOS BGs
+width, height = 800, 600
+win = pygame.display.set_mode((width, height))
+pygame.display.set_caption('Opskurum')
+
+
+bg1 = pygame.transform.scale(pygame.image.load('forest_bg.jfif'), (width, height))
+bg2 = pygame.transform.scale(pygame.image.load('city_bg.jpg'), (width, height))
+
+#VARIÁVEL PARA O FRAME RATE DO JOGO
+clock = pygame.time.Clock()
+#clock.tick(120)
+
+#VARIÁVEL INDENTIFICADORA DAS FONTES PRIMÁRIAS E SECUNDÁRIAS
+font = pygame.font.SysFont('AncientModernTales', 110)
+font2 = pygame.font.SysFont('OldSchoolAdventures', 20)
+
+
+
+start_screen_title = font.render(f'Opskurum', 1, 'white')
+
+#COMANDO PARA O INÍCIO, LOOP E IDENTIFICAÇÃO DAS MÚSICAS
+pygame.mixer.music.load('Hide - Dorian Concept (Slowed x Reverbed).mp3')
+pygame.mixer.music.play(loops = -1)
+key_sound = pygame.mixer.Sound('key_sound.mp3')
+
+#FUNÇÃO MENU
+
+def menu():
+    win.blit(bg1, (0, 0))
+
+    menu_title = font.render(f'Opskurum', 1, 'white')
+    win.blit(menu_title, (40, 10))
+    
+    pygame.display.update()
+
+
+
+def main():
+    run = True
+
+    while run:
+        clock.tick(120)
+        menu()
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+            if event.type == pygame.KEYDOWN:        #VI O KEYDOWN MALDITO E AGORA ELE RODA ESC E TODAS AS OUTRAS TECLAS
+                if key_sound:
+                    key_sound.play()
+                if event.key == pygame.K_ESCAPE:
+                    run = False                   #AGORA ESSE PORRA FECHA NO ESC, CARALHO
+                else:
+                    run = False                 #QUALQUER TECLA, MENO O ESC, DA O FADE PRO BG2
+                    fade_out()
+                    game()
+
+                
+
+        
+            
+    pygame.quit()
+
+if __name__ == '__main__':
+    main()
