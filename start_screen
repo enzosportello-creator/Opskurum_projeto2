@@ -29,8 +29,46 @@ pygame.mixer.music.load('Songs/Hide - Dorian Concept (Slowed x Reverbed).mp3')
 pygame.mixer.music.play(loops = -1)
 key_sound = pygame.mixer.Sound('Sounds/key_sound.mp3')
 
-#FUNÇÃO PARA RODAR A START SCREEN
+#FUNÇÃO PARA O EFEITO DE TRANSIÇÃO DE TELA (FADE OUT)
+def fade_out():
+    fade = pygame.Surface((width, height))
+    fade.fill((0, 0, 0))
 
+    for alpha in range(0, 255):
+        fade.set_alpha(alpha)
+        
+        win.blit(bg1, (0, 0))  # redesenha o fundo
+        win.blit(start_screen_title, (40, 10))
+        
+        win.blit(fade, (0, 0))
+        pygame.display.update()
+        clock.tick(30)
+
+#FUNÇÃO PARA RODAR O JOGO APÓS A START SCREEN
+def game():
+    run = True
+
+    while run:
+        clock.tick(30)
+
+        win.blit(bg1, (0, 0))
+
+        texto = font2.render("Gameplay iniciado!", True, 'white')
+        win.blit(texto, (200, 250))
+
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    fade_out()
+                    run = False
+
+#FUNÇÃO PARA RODAR A START SCREEN
 def main():
     run = True
 
@@ -56,7 +94,8 @@ def main():
 
                 if event.key == pygame.K_ESCAPE:
                     run = False                     #SAI DO JOGO SE O USUÁRIO PRESSIONAR ESC
-                else:                              #CONTINUA PARA A PRÓXIMA TELA SE O PLAYER APERTAR QUALQUER OUTRA TECLA
+                else:   
+                    pygame.display.update()                     #CONTINUA PARA A PRÓXIMA TELA SE O PLAYER APERTAR QUALQUER OUTRA TECLA
                     fade_out()
                     game()
 
