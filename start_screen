@@ -21,10 +21,13 @@ clock = pygame.time.Clock()
 font1 = pygame.font.SysFont('ancientmoderntales', 110)
 font2 = pygame.font.SysFont('oldschooladventures', 20)
 
-#COMANDO PARA O TÍTULO DA START SCREEN
+#COMANDO PARA O TÍTULO DA START SCREEN, GAME MENU E CONFIRM EXIT
 
 start_screen_title = font1.render(f'Opskurum', True, 'white')
 game_menu_text = font1.render("Início", True, 'white')
+confirm_exit_text = font2.render('Deixar o mundo \nmergulhar em trevas?', True, 'white')
+y_n_text = font2.render('(S/N)', True, 'white')
+
 
 #COMANDO PARA O INÍCIO, LOOP E IDENTIFICAÇÃO DAS MÚSICAS E SONS DO JOGO
 pygame.mixer.music.load('Songs/Hide - Dorian Concept (Slowed x Reverbed).mp3')
@@ -127,6 +130,7 @@ def game():
 #FUNÇÃO PARA RODAR A START SCREEN
 def main():
     run = True
+    confirm_exit = False
 
     while run:
         clock.tick(80)
@@ -135,26 +139,40 @@ def main():
         win.blit(bg1, (0, 0))
 
         win.blit(start_screen_title, (40, 10))
-
-        pygame.display.update()
-
+        
+        if confirm_exit:               
+            win.blit(confirm_exit_text, (200, 200))
+            win.blit(y_n_text, (200, 350))
+                
         # --- EVENTOS DE INPUT ---
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
 
+
+            #------ CONFIRMAÇÃO DE SAÍDA ---------
             if event.type == pygame.KEYDOWN:
                 if key_sound:
                     key_sound.play()
 
-                if event.key == pygame.K_ESCAPE:
-                    run = False                     #SAI DO JOGO SE O USUÁRIO PRESSIONAR ESC
-                else:   
-                    pygame.display.update()                     #CONTINUA PARA A PRÓXIMA TELA SE O PLAYER APERTAR QUALQUER OUTRA TECLA
-                    fade_out_in()
-                    game()
+                if confirm_exit:
+                    if event.key == pygame.K_s:
+                        run = False
+                    elif event.key == pygame.K_n:
+                        confirm_exit = False
 
-                  
+                #CONFIRMAÇÃO EM QUALQUER BOTÃO PARA A CONTINUAR PARA A FUNÇÃO GAME()
+                else:
+                    if event.key == pygame.K_ESCAPE:
+                        confirm_exit = True
+
+                    elif event.key not in (pygame.K_s, pygame.K_n):
+                        fade_out_in()
+                        game()
+    
+    
+        pygame.display.update()
+        
     pygame.quit()
 
 #LOOP DO CODIGO
