@@ -11,24 +11,30 @@ win = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Opskurum')
 
 bg1 = pygame.transform.scale(pygame.image.load('Images/forest_bg.jpg'), (width, height))
+bg2 = pygame.transform.scale(pygame.image.load('Images/city_bg.jpg'), (width, height))
 
 #VARIÁVEL PARA O FRAME RATE DO JOGO
 clock = pygame.time.Clock()
-#clock.tick(30)
+#clock.tick(80)
 
 #VARIÁVEL INDENTIFICADORA DAS FONTES PRIMÁRIAS E SECUNDÁRIAS
 font1 = pygame.font.SysFont('ancientmoderntales', 110)
 font2 = pygame.font.SysFont('oldschooladventures', 20)
 
-#COMANDO PARA O TÍTULO DA START SCREEN
+#COMANDO PARA O TÍTULO DA START SCREEN, GAME MENU E CONFIRM EXIT
 
-start_screen_title = font1.render(f'Opskurum', 1, 'white')
+start_screen_title = font1.render(f'Opskurum', True, 'white')
+game_menu_text = font1.render("Início", True, 'white')
+confirm_exit_text = font2.render('Deixar o mundo \nmergulhar em trevas?', True, 'white')
+y_n_text = font2.render('(S/N)', True, 'white')
+
 
 #COMANDO PARA O INÍCIO, LOOP E IDENTIFICAÇÃO DAS MÚSICAS E SONS DO JOGO
 pygame.mixer.music.load('Songs/Hide - Dorian Concept (Slowed x Reverbed).mp3')
 pygame.mixer.music.play(loops = -1)
 key_sound = pygame.mixer.Sound('Sounds/key_sound.mp3')
 
+<<<<<<< HEAD
 def fade_in():
     fade = pygame.Surface((width, height))
     fade.fill((0, 0, 0))
@@ -45,30 +51,91 @@ def fade_in():
 
 #FUNÇÃO PARA O EFEITO DE TRANSIÇÃO DE TELA (FADE OUT)
 def fade_out():
+=======
+#FUNÇÃO PARA O EFEITO DE TRANSIÇÃO DE TELA (FADE OUT e FADE IN)
+def fade_out_in():
+>>>>>>> 61ccb20b98cf35d9c95e9c8c14ea954bec9c79d9
     fade = pygame.Surface((width, height))
     fade.fill((0, 0, 0))
-
+    
+    #FADE OUT
     for alpha in range(0, 255):
         fade.set_alpha(alpha)
         
-        win.blit(bg1, (0, 0))  # redesenha o fundo
+        win.blit(bg1, (0, 0))  #REDESENHA O FUNDO
         win.blit(start_screen_title, (40, 10))
         
         win.blit(fade, (0, 0))
         pygame.display.update()
+<<<<<<< HEAD
         clock.tick(90)
+=======
+        clock.tick(80)
+        
+    #FADE IN BACKGROUND 2
+    for alpha in range(255, 0, -1):
+        fade.set_alpha(alpha)
+        
+        win.blit(bg2, (0, 0))
+        
+        win.blit(fade, (0, 0))
+        pygame.display.update()
+        clock.tick(80)
+        
+    #FADE IN DO TÍTULO DO GAME MENU
+    for alpha in range(0, 255):
+        game_menu_text.set_alpha(alpha)
+    
+        win.blit(game_menu_text, (40, 10))
+    
+        pygame.display.update()
+        clock.tick(80)
+    
+    
+#FADE OUT E IN PARA VOLTAR PARA A TELA DE TÍTULO
+def fade_out_in_back():
+    fade = pygame.Surface((width, height))
+    fade.fill((0, 0, 0))
+    
+    #FADE OUT
+    for alpha in range(0, 255):
+        fade.set_alpha(alpha)
+        
+        win.blit(bg2, (0, 0))  #REDESENHA O FUNDO, IGUAL O FADE_OUT_IN
+        win.blit(game_menu_text, (40, 10))
+        
+        win.blit(fade, (0, 0))
+        pygame.display.update()
+        clock.tick(80)
+        
+    #FADE IN DE VOLTA PRO BACKGROUND 1
+    for alpha in range(255, 0, -1):
+        fade.set_alpha(alpha)
+        
+        win.blit(bg1, (0, 0))
+        win.blit(start_screen_title, (40, 10))
+        
+        win.blit(fade, (0, 0))
+        pygame.display.update()
+        clock.tick(80)
+        
+    
+>>>>>>> 61ccb20b98cf35d9c95e9c8c14ea954bec9c79d9
 
 #FUNÇÃO PARA RODAR O JOGO APÓS A START SCREEN
 def game():
     run = True
 
     while run:
+<<<<<<< HEAD
         clock.tick(90)
+=======
+        clock.tick(80)
+>>>>>>> 61ccb20b98cf35d9c95e9c8c14ea954bec9c79d9
 
-        win.blit(bg1, (0, 0))
+        win.blit(bg2, (0, 0))
 
-        texto = font2.render("Gameplay iniciado!", True, 'white')
-        win.blit(texto, (200, 250))
+        win.blit(game_menu_text, (40, 10))
 
         pygame.display.update()
 
@@ -76,44 +143,67 @@ def game():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-
+                
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    fade_out()
-                    run = False
+                if key_sound:
+                    key_sound.play()
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:       #PRESSIONAR ESC VOLTA PARA A START_SCREEN
+                        run = False
+                        fade_out_in_back()
+                    
 
 #FUNÇÃO PARA RODAR A START SCREEN
 def main():
     run = True
+    confirm_exit = False
 
     while run:
+<<<<<<< HEAD
         clock.tick(90)
+=======
+        clock.tick(80)
+>>>>>>> 61ccb20b98cf35d9c95e9c8c14ea954bec9c79d9
 
         # --- DESENHO DA START SCREEN ---
         win.blit(bg1, (0, 0))
 
-        start_screen_title = font1.render('Opskurum', True, 'white')
         win.blit(start_screen_title, (40, 10))
-
-        pygame.display.update()
-
+        
+        if confirm_exit:               
+            win.blit(confirm_exit_text, (200, 200))
+            win.blit(y_n_text, (200, 350))
+                
         # --- EVENTOS DE INPUT ---
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
 
+
+            #------ CONFIRMAÇÃO DE SAÍDA ---------
             if event.type == pygame.KEYDOWN:
                 if key_sound:
                     key_sound.play()
 
-                if event.key == pygame.K_ESCAPE:
-                    run = False                     #SAI DO JOGO SE O USUÁRIO PRESSIONAR ESC
-                else:   
-                    pygame.display.update()                     #CONTINUA PARA A PRÓXIMA TELA SE O PLAYER APERTAR QUALQUER OUTRA TECLA
-                    fade_out()
-                    game()
+                if confirm_exit:
+                    if event.key == pygame.K_s:
+                        run = False
+                    elif event.key == pygame.K_n:
+                        confirm_exit = False
 
-                  
+                #CONFIRMAÇÃO EM QUALQUER BOTÃO PARA A CONTINUAR PARA A FUNÇÃO GAME()
+                else:
+                    if event.key == pygame.K_ESCAPE:
+                        confirm_exit = True
+
+                    elif event.key not in (pygame.K_s, pygame.K_n):
+                        fade_out_in()
+                        game()
+    
+    
+        pygame.display.update()
+        
     pygame.quit()
 
 #LOOP DO CODIGO
