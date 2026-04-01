@@ -34,27 +34,8 @@ pygame.mixer.music.load('Songs/Hide - Dorian Concept (Slowed x Reverbed).mp3')
 pygame.mixer.music.play(loops = -1)
 key_sound = pygame.mixer.Sound('Sounds/key_sound.mp3')
 
-<<<<<<< HEAD
-def fade_in():
-    fade = pygame.Surface((width, height))
-    fade.fill((0, 0, 0))
-
-    for alpha in range(0, 255):
-        fade.set_alpha(alpha)
-        
-        win.blit(bg1, (0, 0))  # redesenha o fundo
-        win.blit(start_screen_title, (40, 10))
-        
-        win.blit(fade, (0, 0))
-        pygame.display.update()
-        clock.tick(90)
-
-#FUNÇÃO PARA O EFEITO DE TRANSIÇÃO DE TELA (FADE OUT)
-def fade_out():
-=======
 #FUNÇÃO PARA O EFEITO DE TRANSIÇÃO DE TELA (FADE OUT e FADE IN)
 def fade_out_in():
->>>>>>> 61ccb20b98cf35d9c95e9c8c14ea954bec9c79d9
     fade = pygame.Surface((width, height))
     fade.fill((0, 0, 0))
     
@@ -67,9 +48,7 @@ def fade_out_in():
         
         win.blit(fade, (0, 0))
         pygame.display.update()
-<<<<<<< HEAD
-        clock.tick(90)
-=======
+        
         clock.tick(80)
         
     #FADE IN BACKGROUND 2
@@ -118,21 +97,13 @@ def fade_out_in_back():
         win.blit(fade, (0, 0))
         pygame.display.update()
         clock.tick(80)
-        
-    
->>>>>>> 61ccb20b98cf35d9c95e9c8c14ea954bec9c79d9
 
 #FUNÇÃO PARA RODAR O JOGO APÓS A START SCREEN
 def game():
     run = True
 
     while run:
-<<<<<<< HEAD
-        clock.tick(90)
-=======
         clock.tick(80)
->>>>>>> 61ccb20b98cf35d9c95e9c8c14ea954bec9c79d9
-
         win.blit(bg2, (0, 0))
 
         win.blit(game_menu_text, (40, 10))
@@ -160,11 +131,8 @@ def main():
     confirm_exit = False
 
     while run:
-<<<<<<< HEAD
-        clock.tick(90)
-=======
+
         clock.tick(80)
->>>>>>> 61ccb20b98cf35d9c95e9c8c14ea954bec9c79d9
 
         # --- DESENHO DA START SCREEN ---
         win.blit(bg1, (0, 0))
